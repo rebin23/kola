@@ -1,0 +1,883 @@
+Make: Drones
+
+Teach an Arduino to Fly 
+by David McGriffy 
+
+Technology & Engineering/Drones 
+Make: Drones 
+If you’re passionate about drones, get ready to take your skills and understanding  to new heights. Drones make a great platform for learning about the fascinating,  useful, and even beautiful world of control systems. With this guide, you will  learn how to harness the breakthroughs that make possible the remarkable flying  abilities of multirotor copters. 
+The book covers three classes of drones. You’ll start by building a small drone using  the Hubsan frame and brushed motors. As you move up to a medium-sized drone,  you’ll use an Arduino Teensy as the core of a flight-control system and add modules  for power, sensors, and radios. Finally, you’ll build an autonomous drone using the  S500 frame kit, brushless motors, and an ArduCopter flight control system that  makes a great aerial photography platform.
+Inside Make: Drones, you'll find: 
+» Hands-on DIY projects for building your own drones using existing frames 
+» An in-depth examination of flight-control systems and programming 
+» Tips for upgrading and improving off-the-shelf systems 
+» A lucid explanation of multirotor aerodynamics 
+» Custom circuit board design with modular components 
+» Instructions for installing RC radio, telemetry, and GPS systems 
+» Fine-tuning and troubleshooting for flight stabilization 
+» And much more! 
+If you’re ready to get serious about drones and drone control systems, this is the book for you. Teach your Arduino how to fly today! 
+US $29.99 CAN $34.99 
+ISBN: 978-1-6804-5171-9 
+Make: Drones 
+Teach an Arduino to Fly
+David McGriy 
+
+Make: Drones 
+by David McGriy 
+Copyright © 2017 David McGriy. All rights reserved. 
+Printed in the United States of America. 
+Published by Maker Media, Inc., 1160 Battery Street East, Suite 125, San Francisco, CA 94111. 
+Maker Media books may be purchased for educational, business, or sales promotional use. Online edi tions are also available for most titles (http://safaribooksonline.com). For more information, contact O’Reilly Media’s institutional sales department: 800-998-9938 or corporate@oreilly.com. 
+
+Editor: Roger Stewart 
+Production Editor: Nicholas Adams Copyeditor: Charles Roumeliotis Proofreader: Rachel Head 
+October 2016: First Edition 
+Revision History for the First Edition 2016-10-05: First Release 
+Indexer: Ellen Troutman-Zaig Interior Designer: David Futato Cover Designer: Julie Cohen Illustrator: Rebecca Demarest 
+
+See http://oreilly.com/catalog/errata.csp?isbn=9781680451719 for release details. 
+Make:, Maker Shed, and Maker Faire are registered trademarks of Maker Media, Inc. The Maker Media logo is a trademark of Maker Media, Inc. Make: Drones and related trade dress are trademarks of Maker Media, Inc. 
+Many of the designations used by manufacturers and sellers to distinguish their products are claimed as trademarks. Where those designations appear in this book, and Maker Media, Inc. was aware of a trademark claim, the designations have been printed in caps or initial caps. 
+While every precaution has been taken in the preparation of this book, the publisher and author assume no responsibility for errors or omissions, or for damages resulting from the use of the informa tion contained herein.
+978-1-680-45171-9 [LSI] 
+Table of Contents 
+Preface . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ix 
+1. What Makes a Drone Possible . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 Motors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 Batteries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 Control Systems . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5 
+2. Popular Drone Control Systems . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9 MultiWii . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9 Dronecode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 
+APM/ArduPilot . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 PX4/Pixhawk . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13 DJI/Naza . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14 KK2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14 CC3D/OpenPilot . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15 Naze32/Baseight/Cleanight . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16 Choosing a Flight Control System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17 
+3. Drone Activities . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19 Aerial Photography . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19 FPV Racing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20 
+iii
+Education . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21 Flying . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22 
+4. Improve the Hubsan X4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23 Goals and Test Methods . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24 Battery Upgrade . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26 Prop Upgrade . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27 
+5. Build the X4Wii . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31 Parts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32 Build . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35 
+Flashing New Code . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35 Wiring . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37 Assembly . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40 
+Setup and Tuning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42 RC Rates . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42 PIDs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43 Modes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45 
+6. The Visible Drone . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49 A Teensy CPU . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50 Radios . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51 IMU/AHRS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52 Power . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53 Circuit Board with Motor Controllers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54 Frame/Motors/Props . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55 Weight Budget . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56 
+7. Basic I/O Code . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57 Setting Up the IDE . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57 Main Loop . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59 RC Receiver . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60 Bluetooth . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63 
+iv Make: Drones
+Motors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66 
+8. Multirotor Aerodynamics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69 Lift and Thrust . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69 Pitch and Roll . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71 Yaw . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71 Translational Lift . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73 Vortex Ring State . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74 
+9. IMU/AHRS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75 Gyros . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 76 Accelerometers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 77 IMU . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 78 Magnetometers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 80 
+10. Mode and Mix . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 83 Mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 83 Angle Mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 84 Rate Mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 85 Mix . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 85 
+11. PIDs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 87 The Algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 87 P—Proportional . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 87 I—Integral . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88 D—Derivative . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 88 Implementation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 90 Tuning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 90 Theory . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 90 Practice . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 94 
+12. Circuit Board and Motor Controllers . . . . . . . . . . . . . . . . . . . . . . . . . 97 Design Tools and Files . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98 Component Placement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 98 
+Table of Contents v
+Power Input and Distribution . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 99 Motor Controller . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 100 Schematic and Layout . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 102 Construction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 104 
+13. Construction and Tuning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 107 Install the Controller and Connect the LEDs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 107 Connect the Motors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 108 Install the Radios . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 109 Complete the Frame . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 110 Ground Test . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 112 Flight Test and Future Work . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 114 
+14. A Bigger Frame . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 117 The S500 Kit . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 118 Follow the Instructions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 119 
+15. Install the Power System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 123 Mount the ESCs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 123 Wire the Power Distribution Board . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 124 Mount the Motors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 126 Determine Direction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 127 
+16. Brushless Motors and Their ESCs . . . . . . . . . . . . . . . . . . . . . . . . . . 131 Brushless Motors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 131 ESCs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 134 BECs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 135 
+17. Install the Flight Controller and Radios . . . . . . . . . . . . . . . . . . . . . 137 Pixhawk Lite and Shock Mount . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 138 RC Radios . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 140 Telemetry Radio . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 143 Safety Switch . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 144 Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 144 
+vi Make: Drones
+18. GPS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 147 History . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 148 Theory . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 148 HDOP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 150 Installation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 151 
+19. Magnetometer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 155 The Earth’s Magnetic Field . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 155 Declination and Deviation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 156 Magnetoresistance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 158 Use in Drones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 159 
+20. Flying the S500 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 161 Install the Props . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 162 Connect the Battery and Voltage Monitor . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 164 Radio and Accelerometer Calibration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 166 Flight Modes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 168 Initial Tuning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 168 Final Checklist and First Flight . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 169 
+21. Optical Flow, Sonar, and Lidar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 171 Sonar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 172 Lidar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 173 Optical Flow Sensors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 173 Visual Odometry . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 175 
+22. Vibration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 177 Causes of Vibration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 178 Effects of Vibration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 178 Damping and Isolation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 179 Prop Balancing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 180 
+23. Failure Modes and Fault Tolerance . . . . . . . . . . . . . . . . . . . . . . . . . 183 Failsafes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 183 
+Table of Contents vii
+
+Redundancy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 185 
+24. Interfaces . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 187 Computer Interfaces . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 187 RC Radio Standards . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 190 
+DSM/DSM2/DSMX . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 190 FrSky . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 191 Servo/ESC Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 191 Telemetry . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 192 GPS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 193 
+25. The Future . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 195 Specialization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 195 Regulation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 196 Ease of Use . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 196 Safety . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 196 Human Flight . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 197 
+Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 199 viii Make: Drones
+
+Preface 
+Success 
+The successful people I have known all seem to have gotten there by some personal mix of talent, luck, and work. I hope that the mix turns out right in this book and that I succeed in inspiring you to make something. It will probably be a drone, but if it’s a great new garage door opener, I’ll count that as a success as well. 
+I have put my unique talents into this book, as you will into your project. I was born with a soldering iron in my hand, or almost, thanks to my father’s ham radio hobby. Also, largely due to his efforts, I started finding things to program when I was still a kid. I happen to love mathematics, which has served me well as a coder, of course. And there are several pilots on my father’s side of the family. But there are other threads in my life that led to drones. 
+From my mother’s side I get music. My love of music and my love of gear came together in recording technology. This led to computer audio and digital signal processing. And now we get back around to drones. Many of the very same algorithms I have coded for audio processing get used in drones to process sensor data and control inputs. 
+Add in some professional experience doing consulting in the control systems business, and perhaps you can see why I love building drones. It all comes together—building elec tronics, ying, radios, programming, signal processing. But there was also some luck involved in the creation of Make: Drones. 
+My old friend Tim Deagan was working on his book, Make: Fire, and I shot some drone video of his fire projects. Then Roger, who would become our mutual editor, said, “Drones are hot, send me a book proposal on drones,” so I did. 
+Then there is the work. And I don’t just mean mine. Roger Stewart makes all those things happen that turn a bunch of files into a book on a shelf. Ron Parsons has saved me from many an error as technical editor. He also let me play on his Processor Technology Sol per 
+ix
+sonal computer when I was a kid, giving me one of my very first programming experiences. And without the constant support of my wife, Marva, and kids, Stella and Sean, the produc tion and marketing teams would never have had anything to work on. 
+The real success, of course, is not just a book on a shelf. I hope that this book inspires you to make something that pulls the threads of your life together. I hope that this book helps you see that even something as complex as a drone control system can be broken down into fundamental, understandable parts. Over and over we see that the same technologies that make a drone y make many of our other modern gadgets possible. I hope that they will make your project y, figuratively and perhaps literally. 
+Small, Medium, Large 
+You can divide this book into three sections, as drones nicely divide themselves into small, medium, and large based mostly on their motors. Small drones use brushed motors directly connected to small props. Medium-sized drones use the same 6- to 8-millimeter motors, but gear them down in order to use larger, more ecient props. Large drones use brushless motors and electronic speed controllers. Each of these classes can actually vary greatly in size, but the general trend holds true. 
+In Chapters 4–5 we work with small drones. First we take some measurements and try to improve the performance of an existing small drone, the Hubsan X4C. Then we build a new small drone using a Hubsan frame and an open source ight controller. It’s called the X4Wii since it uses an X4 frame and MultiWii ight control code. 
+Chapters 6–13 cover the construction of a medium-sized drone. Once again we start with the frame from an existing drone, the Syma X5. We use an Arduino Teensy 3.2 as the core of our new ight control system, adding modules for power, sensors, and radios. A custom circuit board ties it all together. Finally, so that people can see this new custom controller, we put a clear lid on it and call this project the Visible Drone. 
+In Chapters 14–20 we build a large drone, based on the S500 frame kit. For ight control, this one uses the powerful Pixhawk Lite controller and ArduCopter ight control software. Combined with a high-performance GPS unit, this system can y completely autonomous missions—and it has the power to carry a useful payload while doing it. This one will make a great aerial photography platform. 
+Having talked about what makes current drones possible in the first few chapters, we will look at the future of drones in the last few. Researchers and hobbyists alike continually push the limits of drones with new sensors and ever more sophisticated software. Be a part of this future and make a drone! 
+x Make: Drones
+Conventions Used in This Book 
+The following typographical conventions are used in this book: 
+Italic 
+Indicates new terms, URLs, email addresses, filenames, and file extensions. 
+Constant width 
+Used for program listings, as well as within paragraphs to refer to program elements such as variable or function names, databases, data types, environment variables, statements, and keywords. 
+This element signies a general note, tip, or suggestion. 
+This element indicates a warning or caution. 
+Using Code Examples 
+Supplemental material (code examples, exercises, etc.) is available for download at http:// www.makedronesbook.com. 
+This book is here to help you get your job done. In general, if example code is offered with this book, you may use it in your programs and documentation. You do not need to con tact us for permission unless you’re reproducing a significant portion of the code. For example, writing a program that uses several chunks of code from this book does not require permission. Selling or distributing a CD-ROM of examples from Make: books does require permission. Answering a question by citing this book and quoting example code does not require permission. Incorporating a significant amount of example code from this book into your product’s documentation does require permission. 
+We appreciate, but do not require, attribution. An attribution usually includes the title, author, publisher, and ISBN. For example: “Make: Drones by David McGriffy (Maker Media). Copyright 2017 David McGriffy, 978-1-680-45171-9.” 
+If you feel your use of code examples falls outside fair use or the permission given above, feel free to contact us at bookpermissions@makermedia.com. 
+Preface xi
+Safari® Books Online 
+Safari Books Online offers a range of plans and pricing for enterprise, government, educa tion, and individuals. 
+Members have access to thousands of books, training videos, and prepublication manu scripts in one fully searchable database from publishers like O’Reilly Media, Prentice Hall Professional, Addison-Wesley Professional, Microsoft Press, Sams, Que, Peachpit Press, Focal Press, Cisco Press, John Wiley & Sons, Syngress, Morgan Kaufmann, IBM Redbooks, Packt, Adobe Press, FT Press, Apress, Manning, New Riders, McGraw-Hill, Jones & Bartlett, Course Technology, and hundreds more. For more information about Safari Books Online, please visit us online. 
+How to Contact Us 
+Please address comments and questions concerning this book to the publisher: 
+Maker Media, Inc. 
+1160 Battery Street East, Suite 125 
+San Francisco, CA 94111 
+877-306-6253 (in the United States or Canada) 
+707-639-1355 (international or local) 
+Maker Media unites, inspires, informs, and entertains a growing community of resourceful people who undertake amazing projects in their backyards, basements, and garages. Maker Media celebrates your right to tweak, hack, and bend any technology to your will. The Maker Media audience continues to be a growing culture and community that believes in bettering ourselves, our environment, our educational system—our entire world. This is much more than an audience, it’s a worldwide movement that Maker Media is leading. We call it the Maker Movement. 
+For more information about Maker Media, visit us online: 
+Make: and Makezine.com: http://makezine.com 
+Maker Faire: http://makerfaire.com 
+Maker Shed: http://makershed.com 
+We have a web page for this book, where we list errata, examples, and any additional infor mation. You can access this page at http://bit.ly/make-drones. 
+To comment or ask technical questions about this book, send email to bookques tions@oreilly.com. 
+xii Make: Drones
+
+What Makes a Drone Possible 
+1
+
+The quadcopter glides gently through the sky, using every subtle variation in the atmos phere to its advantage, performing that delicate dance with the air that we call ight. 
+Doesn’t quite sound right, does it? 
+Let’s face it, a quadcopter doesn’t so much dance with the air as arm wrestle. Usually the quadcopter wins. Some days the sky wins. 
+No, the beauty of a drone is not in the graceful curve it cuts through the sky or the subtle shape of its wings. It has no wings, of course. In fact, among the best things about our modern multirotors are all the parts they don’t have. No wings. No control surfaces and no servos to move them. No complex collective pitch hubs. No stall speed, timed turns, or holding patterns. We have stripped ying down to its bare essentials. We have four moving parts that push us upward, and the rest is in the control system (Figure 1-1). 
+
+Figure 1-1 A micro drone in a mint tin 
+1 
+Motors
+And now we are getting closer to where the beauty lies. 
+As with the most interesting people and the best books, the real beauty of the multirotor drone is on the inside. An ArduCopter-based drone has four main inputs from two joysticks and four outputs to its motors. To compute those four outputs from those four inputs, it uses nearly three hundred parameters. At first it may appear that this is so complex as to be magic, but it’s not. It’s engineering. And precisely because of all the parts it doesn’t have, a drone turns out to be a wonderful platform to learn about engineering principles. 
+The algorithms used in drone control systems are basic, important, and beautiful. You’ll dis cover that learning how to use them will be fun and interesting. But these methods have been around for decades. So whatever the aesthetics, they are not the breakthrough that made modern quadcopters possible. And make no mistake: there have been break throughs. 
+I have own radio control aircraft off and on for many years and have watched them with great interest since I was a kid. There have long been RC helicopters, but they were expen sive and very hard to y. Then there were toy helicopters, but to watch them y is to know that they belong in the toy aisle. The military built cruise missiles, but they cost millions. Then one day a friend brought a quadcopter into the oce. It would fit in your hand and it ew like an aircraft, not just a toy. And the punch line? It cost $20! Now that’s what I call a breakthrough. 
+So I bought one, then another, then a bigger one. Then I built one from scratch and started to modify the ight control code. After many crashes and much thought, I am now ready to say what has changed: motors, batteries, and control systems. 
+Drones Versus Quadcopters 
+
+You will see several terms for the ying things we will build here. Some take “drone” to mean only a military system or vehicle that can y autono mous missions. Since it is by far the shortest, easiest word for it, I intend to use the word “drone” for just about anything that can y without a human on board. The military actually calls them unmanned aerial vehicles (UAVs) and the FAA calls them unmanned aerial systems (UASs), but I use enough acronyms in my life without using one where a one-syllable word 
+Motors 
+like “drone” will do. The term “multirotor” leaves out fixed-wing aircraft and traditional helicop ters, but describes everything we will build here. The term “quadcopter” describes an even more limited class—only those with four, not six or eight, props—but still covers all of our projects. We will use these words to differentiate our drones from fixed-wing or six-rotor vehicles when needed, but also sometimes just for vari ety. 
+
+That first little quadcopter I saw at the oce, like most micro drones, used tiny electric motors. They are smaller but look essentially the same as the small DC motors I bought 10 to a bag as a kid, but those were nowhere close to powerful enough to lift themselves. It 
+2 Make: Drones 
+Motors
+turns out that there is an essential difference between the quadcopter motors and the motors I was familiar with. Like many motors these days, they use rare earth magnets, but that’s not the essential difference. These “coreless” motors (Figure 1-2) are optimized for aviation. 
+Figure 1-2 6 mm, 7 mm, and 8.5 mm coreless motors 
+The windings in small motors, like nearly all electric magnets, are generally made around a core of some ferrous material like iron. This makes the magnets more ecient—electrically ecient, that is. It turns out, however, that weight is more important than energy eciency in aviation, so someone thought to take out that heavy core, and our tiny, ight-ready motors were born. 
+These coreless motors, used in smaller drones, are often called “brushed” to differentiate them from the sort of motor used in larger multirotors, which have no brushes. In most motors, brushes riding on a series of contacts control which windings get energized in what order. In a brushless motor, first developed for oppy disk drives (see Figure 1-3), electronics control the windings instead of contacts, making a simpler, longer-lasting motor. 
+Chapter 1 3 
+Batteries
+Figure 1-3 Modern drones and old floppy drives use similar brushless motors 
+Like the drones they y in, brushless motors gain mechanical simplicity at the expense of control system complexity. Each of the four motors in a brushless quad has to have its own little processor, always watching the back current on the unused coils to determine posi tion, and adjusting the current to the other coils to achieve the speed commanded by the central ight controller. 
+Batteries 
+I suppose it should come as no surprise that the power plant is one of the important tech nologies in a drone. It has always been so in aviation. From that first piston engine that Orville made according to Wilbur’s design, to Whittle’s first jet engine, to the rocket that Chuck Yeager ew, advances in power have driven advances in aviation. And each new power plant comes with its new fuel source. 
+For our modern electric aircraft—and this means mostly drones, though there are a few experimental human-carrying electric aircraft—the fuel source is a battery. The most com mon battery technology used by drones today is the LiPo, or lithium polymer battery, as seen in Figure 1-4. 
+4 Make: Drones 
+Control Systems
+Figure 1-4 A selection of 1S and 3S LiPos 
+LiPos come in all sizes and shapes, from batteries the size of a thick postage stamp to bat teries the size of a suitcase that can literally run your house or your car. Their capacities and capabilities vary accordingly. They can be rather finicky things compared to say, nickel– metal hydride (NiMH) batteries. LiPos don’t like to be left fully charged for long but don’t want to be stored completely empty either. Treat them wrong and it is pretty easy to ruin them, or worse. They have a bit of a reputation for catching on fire, but with a few reason able precautions LiPos will allow us to do things no other batteries will. 
+Control Systems 
+In between the batteries and the motors is the control system. Even the tiniest micro drone has several subsystems, including radio receivers, gyros, accelerometers, and, of course, a processor to tie it all together. Since each of these components is just a little black chip on a circuit board that looks much like those out of any modern consumer electronics gadget, people may be less aware of the advances that have made modern drone control systems possible. 
+Before looking at what’s new, however, it’s worth pointing out that some parts of these lit tle control systems date back years or even decades. The processors used are fairly modern, but the microcontrollers of several years ago could have done this job as well. On the software side, the algorithms used, including the Kalman filter and PID controller, have been used by control systems engineers since long before the microprocessor was inven ted. 
+Chapter 1 5 
+Control Systems
+Having acknowledged the great work of engineers past, however, some aspects of drone control systems do represent new breakthroughs. The general shrinking of electronic com ponents in both physical size and power consumption makes smaller drones possible. Modern design and manufacturing techniques allow these tiny chips to be integrated into task-specific circuit boards that can be economically made in small numbers. A ight con troller, containing all the subsystems mentioned above and more, can be put on a single board that you could lose in a shirt pocket. 
+At least one of the chips on that little board represents a breakthrough that is more spe cific to aviation: the gyro. Gyroscopes have been used to stabilize aircraft since Lawrence Sperry demonstrated his gyroscopic stabilizer apparatus on a Curtis C-2 biplane to a French audience in June 1914. As mentioned earlier, radio-controlled helicopters were notoriously hard to y, so someone eventually made a gyroscopic stabilizer for them. The first models used physical spinning disks, just like the children’s toys, and thus were rather large and heavy for all but the biggest model helicopters. The price of a single axis stabil izer would buy a complete midsized quadcopter today. 
+Now we can get three gyros and three accelerometers in a single chip (Figure 1-5) and they only cost a few bucks, even in small, maker-friendly quantities. And this brings us to one more breakthrough and pleasant surprise. It’s nothing new for a consumer gadget like a drone to be made more cheaply in China. What makes this new world of micro aviation so exciting for makers is that Chinese manufacturing has resulted in a range of drone parts that we can buy in single units, mix and match, and make into our own designs. 
+Figure 1-5 A gyroscope module and its inspiration 
+6 Make: Drones 
+Control Systems
+For all these innovations, we are yet at the beginning of the drone revolution. As of this moment, the FAA has just announced new rules for commercial drone use; and many types of activities, like package delivery, are not allowed at all. The drones themselves are only just starting to add safety features like collision avoidance and recovery parachutes that will make them safe and reliable enough to share the airspace with each other and with other aircraft. The first international drone racing championship was just held, and every where drones are being used in classrooms to excite kids and teach engineering concepts. 
+And teaching engineering concepts brings us back to what we will do in this book. We will take the tools we are already familiar with—an Arduino, some motors, and a battery—and we will teach them how to y. In the process, we will learn some basic engineering that can be used in making anything from robots to coffee pots. Then, when the construction is complete and the tuning is done, when you have put in the hours and learned to control your drone, you will be rewarded with one of humanity’s oldest dreams: ight, an experi ence made deeper because your understanding made it possible. 
+Chapter 1 7 
+
+Popular Drone Control Systems 
+2
+
+Of the three breakthroughs that made drones possible—motors, batteries, and control sys tems—I find control systems the most interesting. Perhaps I am biased by a lifetime of writ ing code, but I am also drawn by the human elements. Of course, real people with stories to tell developed our motors and batteries too, but those stories are trapped inside compa nies in China. The ight controllers we will look at here are mostly open source, so the story of their development gets played out in public. 
+In this chapter we will look at several drone control system projects. Each of these projects has developed software that runs on drones for stability and control. Many projects also include ground control station software to monitor and tune drones, or even open source hardware specifications. We’ll look at the history of each and sort out the reasons one might choose one system over another. 
+MultiWii 
+Yes, the two i’s at the end of the name are a reference to the Nintendo video game system.  When solid-state gyros were first becoming commercially available, one of the earliest products to use them was the Wii controller. Untold numbers of Wii controllers were taken apart because they were the most reliable place to get the chips. In time, a whole control system grew up using gyros taken from Wii controllers that were connected to Arduinos to control multirotors. This project became known as MultiWii. 
+The original Wii controller only had accelerometers, no gyroscopes, which wasn’t enough to control ight. Using either the Motion Plus extension or the Nunchuck, one could get three axes of gyroscope. Some of the earliest MultiWii models didn’t use accelerometers and thus had no absolute reference to the horizon. But stabilizing the roll, pitch, and yaw rates provided just enough control to y. Today, the MultiWii codebase supports all the common gyro/accelerometer chips, including the currently very popular InvenSense 
+9 
+MultiWii
+MPU-6050 in the MicroMWC pictured in Figure 2-1, which we will use later when we build the X4Wii. 
+Figure 2-1 A MultiWii-based flight controller with its namesake 
+The original MultiWii multirotors used an Arduino Pro Mini, but the codebase now sup ports all the common versions of Arduino. One of the advantages of using MultiWii is the number of integrated ight controllers you have to choose from. They all start with some type of Arduino processor and a gyro/accelerometer chip. They may include a radio control receiver, brushed motor controllers, or a compass or barometer. Some will have plugs for easy attachment of external devices such as radios or GPS devices. Which one is right for your project depends on whether you are using brushed or brushless motors, whether you need GPS, and so on. 
+MultiWii is mature as drone control systems go, and because of this it has given birth to several offshoot projects. These include, most significantly, Baseight and Cleanight, which we will cover later in this chapter. This maturity means that there are also a variety of support programs available. MultiWiiConf, the main configuration program, is available for all the major desktop and mobile platforms. Because several of the offshoot projects have maintained compatibility with the MultiWii Serial Protocol (MSP) that it uses to communi cate, MultiWiiConf and many of the MultiWii support programs can be used with these other control systems as well. 
+While MultiWii supports GPS stabilization and there are experimental versions for all the latest sensors, it does have its limits. As the “multi” in the name implies, MultiWii is for mul tirotors, not for helicopters and certainly not for fixed-wing aircraft. Nor can it run complex, 
+10 Make: Drones 
+Dronecode
+autonomous missions. (The latter is the strength of the next drone control system we will look at.) 
+The First MultiWii Tricopter 
+The first aircraft to use what would become Mul 
+tiWii was a tricopter built by Alexandre Dubus in 
+2010 (Figure 2-2). It had only gyroscopes (no 
+accelerometers), so it had no absolute horizon 
+reference. Nevertheless, reports are that it ew 
+pretty well. 
+Figure 2-2 The first MultiWii tricopter had no 
+accelerometers 
+Dronecode 
+Dronecode is a Linux Foundation Collaborative Projects initiative that combines open source hardware and software projects with APIs and communications protocols to create a rich and wide-ranging development platform for unmanned aerial vehicles (UAVs). On the software side, there are two main ight control projects: APM/ArduPilot and PX4. Each has a related hardware project with which it shares a name, though there is some cross compatibility. There are also related projects for things like ground stations and simulators. 
+We will divide our discussion of the Dronecode world into two sections, centered around APM/ArduPilot and PX4/Pixhawk. Let’s take the older APM/ArduPilot system first. 
+APM/ArduPilot 
+You will see the terms APM, ArduPilot, ArduCopter, and APM:Copter. The most confusing term is APM, because it refers both to the APM 1 & 2 hardware and the APM ight code project. The latter is also known as ArduPilot, and it is a general-purpose autopilot that has variants for different types of vehicles now known as APM:Plane, APM:Rover, and APM:Copter. These were previously known as ArduPlane and so forth. The addition of a GPS, as shown in Figure 2-3, makes this system capable of autonomous ight. 
+Chapter 2 11 
+Dronecode
+Figure 2-3 An ArduPilot flight controller with power monitor and GPS 
+The APM:Copter ight control system originated from a collaboration between Chris Anderson and Jordi Muñoz. Chris had been building a plane controlled by a Lego Mind storms controller (see “Lego Mindstorms Autopilot”) and Jordi was working on a traditional helicopter. Together they built a plane that won the first SparkFun autonomous vehicle competition in 2009. This plane used thermopiles, an array of six photocells, to stay level by keeping track of the sun. Chris and Jordi went on to found 3D Robotics and the control ler from that plane went on to become ArduPilot and then APM. 
+3D Robotics 
+It is important to remember that 3D Robotics is synonymous with neither APM nor PX4. 3DR is perhaps the largest, but not the only, retailer of the hardware. While it is a key sponsor of the various Dronecode projects and sells products based on them, 3DR also extends these systems so that its products have many unique capabilities as well. 
+To add a bit of naming confusion, the first hardware that ran ArduCopter was called Ardu Pilot, a name now used only for software. Other earlier versions of the hardware for run ning ArduCopter were called APM 1 through APM 2.6. Only the 2.x boards are still supported as of this writing. These older ight controllers use 8-bit microcontrollers and can only run versions of ArduCopter up to 3.2.x. To run the newer versions at the speed required to keep up with aircraft requires more power. This is where the cross 
+12 Make: Drones 
+
+Dronecode
+compatibility between different Dronecode projects comes into play. To run APM:Copter software version 3.3 or later, you need one of the more powerful platforms. Several options are available, including one based on the Raspberry Pi 2, but the most common choice is PX4 hardware. 
+Lego Mindstorms Autopilot 
+Chris Anderson built this autopilot, based on a 
+Lego Mindstorms NXT controller (Figure 2-4). He 
+was working on building an autonomous aerial 
+vehicle for under one thousand dollars. One 
+measure of how far we have come is the fact the 
+we can build one for closer to one hundred dol 
+lars today. This first design put the normal R/C 
+servo on top of the NXT servo so that moving 
+either one moved the rudder. That way the pilot 
+could control the plane normally or engage the 
+autopilot and let the autopilot execute a one 
+hundred eighty degree turn then y level until 
+the pilot takes control again.Figure 2-4 Chris Anderson’s Lego Mindstorms 
+Autopilot includes both a Lego and tradition R/C 
+servo 
+PX4/Pixhawk 
+The Pixhawk and PX4 ight controllers have 32-bit processors with oating-point units, improved sensors, and much more connectivity than the older APM hardware. They run the NuttX operating system and feature a middleware layer, also called PX4, that gives the ight control application a consistent interface regardless of the hardware being used. The ight control application, PX4 Autopilot, ies the aircraft. The PX4 hardware and middle ware also support the APM/ArduPilot stack. 
+The PX4/Pixhawk software stack and hardware specifications were developed with support from the ETH Zurich research institute in Switzerland, as well as many other labs and indi viduals. Advanced controllers, I/O boards, and sensors are available (including, notably, the PX4Flow optical ow sensor that allows aircraft to remain fixed over a spot on the ground without using GPS). The PX4 system also supports research projects doing advanced vision work, using either internal or external cameras to provide position information to the auto pilot. Due to its advanced autonomous ight abilities, PX4 is an obvious choice for projects involving the simultaneous control of multiple aircraft. 
+To sum it up visually, the world of APM/PX4 looks something like the diagram in Figure 2-5. Chapter 2 13 
+
+DJI/Naza
+Figure 2-5 Diagram of the APM/PX4 system 
+DJI/Naza 
+If imitation shows some kind of respect, then DJI is surely the most respected drone maker in the world. Every all-white, fully enclosed, X-shaped drone with red and silver bands on its arms is a form of homage to DJI’s Phantom line of quadcopters. The control systems that run these and DJI’s larger commercial multirotors are versions of its proprietary ight con trol system, Naza. DJI specializes in aerial photography and, with the Phantom series, is making drone photography accessible to an ever-larger audience.  
+DJI’s expanding audience includes many people who just want photographic results and who are not so much interested in spending hours learning the art of ying. While they may be missing out on the beauty of aviation, they have a job to do. The real-world appli cations drones are used for, from ranching to real estate to search and rescue operations, deserve hardware that is as reliable and easy to use as possible, and DJI is leading the pack. 
+The technology that DJI uses to make its products easy to use includes receivers combin ing GPS and Glonass satellites and optical ow sensors. In its control systems, DJI pays careful attention to tuning the ight control parameters. Because DJI sells complete inte grated systems, it can do this precisely for the particular hardware being used. Its batteries and charging systems are more foolproof, and more expensive, than most. DJI builds its own cameras and gimbals, and thus these systems are highly integrated as well. 
+The Naza control systems used in these integrated packages are also available separately for use in custom drones where reliability and smooth operation are critical. They offer advanced failover systems and modes specially tuned for getting photographic results. Some may complain that Naza-based drones aren’t as fun to y, but judged by their own goals they are hard to beat. 
+KK2 
+KK2 ight controllers started with the KKMulticopter board designed by Rolf Bakke. The first features you notice on almost all KK2 boards are a screen and four buttons, as seen in Figure 2-6. This enables the principal advantage of the system, which is that it can be com 
+14 Make: Drones 
+CC3D/OpenPilot
+pletely configured and tuned without the use of a PC or even a smartphone. Recent ver sions update the system with the latest gyros and even a backlit screen. And they are cheap. With a screen, buttons, and a processor for under $20, it’s a wonder that these boards aren’t more often repurposed for projects other than building quadcopters. 
+Figure 2-6 KK2 controllers traditionally include a screen 
+The KKs still use 8-bit CPUs. Given, however, that they are not trying to do operations such as GPS waypoint navigation or collision avoidance, they work quite well. In fact, solid ight performance is the other thing KK controllers are known for. In the early years—they go back to 2012—KKs did a better job than most systems using the limited gyros that were then available. Today, with the same InvenSense MPU-6050 six-axis gyro/accelerometer chip that everyone seems to be using, the ight performance of the KKs is quite good. What really sets these boards apart, though, is that little screen (and the bigger ones it lets you do without). 
+CC3D/OpenPilot 
+The OpenPilot project espouses similar goals to DJI: providing a stable, easy-to-use plat form for aerial photography or robotics. But unlike the DJI systems, OpenPilot is open source and nonprofit; keeping costs down is another of the project’s goals. In addition to multirotors, the system supports helicopters and fixed-wing aircraft. Like the APM systems, OpenPilot supports ight control software, ground stations, and a couple of hardware options. 
+Chapter 2 15 
+Naze32/Baseflight/Cleanflight
+The OpenPilot ight control software includes a complete ight-plan scripting language, supports wireless telemetry, and has all the features you would expect of a modern drone control system. The latest versions require the latest hardware, of course, which is called Revolution or Revolution Nano. But it’s the old hardware, called CC3D for ControlCopter 3D (see Figure 2-7), that really makes this whole project significant. 
+Figure 2-7 This CC3D board can run several flight control systems 
+The CC3D board is one of the most cloned and, thus, most widely available and inexpen sive ight controllers. The KK2 controller is also inexpensive and widely available, but CC3D gives you a choice of several ight control systems to run on it. It supports not only Open Pilot but also the Baseight and Cleanight systems, which we will cover next. Not bad for a controller that can be bought in a case for less than the cost of most Arduino boards! 
+Naze32/Baseflight/Cleanflight 
+So, we have come full circle. We started with MultiWii and now we are back to a group of MultiWii forks. Naze32 (not to be confused with the DJI system, Naza) brings MultiWii into the 32-bit world with its AfroFlight line of hardware. Baseight, the software that goes with Naze32, was forked from MultiWii to take advantage of the 32-bit processors that were becoming available. Because of its MultiWii heritage, Baseight can still use MultiWiiConf as a base station, but BaseightConf base station software is available as well. Here the story turns a little ugly, though. 
+16 Make: Drones 
+Choosing a Flight Control System
+Another developer came along and thought he could do better yet. He forked the Base- ight code, cleaned it up, and called it Cleanight. And there is a CleanightConf base sta tion program. The original developer of Baseight was not happy about this new fork. You might want to read the history of the disagreement and make your choice about which to support. 
+Based purely on ying qualities and other features, the two are reasonably close. Each ies well enough to have its own set of supporters, especially among the drone racing crowd. So what differentiates them? Baseight is a bit more mature, with less frequent updates and less support for new features. Cleanight gets updated more often and will certainly be the first to support things like GPS. Perhaps most significantly, Cleanight will run on a CC3D board, making it a very economical option, and there are now a couple of Cleanight boards with integrated brushed motor controllers for making micro drones. 
+Choosing a Flight Control System 
+We’ve looked at a few of the most popular drone control systems, but there are certainly more. Tau Labs is a fork of OpenPilot that deserves a mention. Paparazzi is an open source ight controller project that includes the Lisa/S autopilot, the smallest ight controller that includes GPS and thus can perform completely autonomous ights. 
+So how do you choose? In many cases, there are several options that will do a fine job. After making sure your basic requirements are met, you can usually choose based on price or because of a feature that strikes your fancy. Figure 2-8 is a Venn diagram showing the domains in which each system tends to be used most often. 
+Figure 2-8 Common uses of dierent drone control systems 
+Chapter 2 17 
+Choosing a Flight Control System
+We will get more experience with making these decisions as we choose controllers for our hands-on construction projects in the coming chapters. 
+18 Make: Drones 
+
+Drone Activities 
+3
+
+While the main focus of this book will be building drones, let’s stop for a moment to con sider what we can do with them once they are built. Different drones for different jobs, of course. The smallest toy drones might be mostly for fun, but they can be great for training too. Most larger drones carry a camera, but aerial photography can be used for anything from real estate to search and rescue. 
+While we may customize each drone for a particular activity—bigger motors and props for a heavy camera, small and low-latency video gear for an FPV racer—the design principles and even much of the equipment gets shared between these subgroups. Once you’ve built the projects covered in this book, you will be well prepared to dig into any one of these activities. 
+Aerial Photography 
+It seems like every drone in the store has a camera on it now. Most of these are good for little more than aerial selfies, but you can also see what your home or ying field looks like from the air. Step up to better gear and you have the basics for aerial real estate photogra phy, which has been one of the first really viable businesses you can run with a drone. 
+Aerial cinematography—taking shots for movies from the air—has been around for a long time. Before the development of modern multirotors, Hollywood used RC helicopters for the job, but these were large, expensive, and notoriously dicult to y. Today filmmakers use hex- and octocopters, still large but much easier to y thanks to modern control sys tems. The combination of high-performance medium-sized or large drones like the final project in this book with action cameras like the GoPro means that even home movies can use aerial photography now (Figure 3-1). 
+19 
+FPV Racing
+Figure 3-1 The widely available Cheerson CX-20 can carry a GoPro and a gimbal 
+Not everything shot with a camera is art, of course—by which I mean things like mapping, not just bad photography. Drones can easily be programmed to follow grid patterns and record the GPS positions of each frame as they go. Specialized software then stitches the images together into a complete map of the covered area. Complete turnkey solutions for this have been around for a while, and now they are adding features like infrared cameras and lidar for more accurate height data. 
+Like their ground-based robot cousins, drones get sent into places where humans can’t or shouldn’t go just to look around. Search and rescue teams use drones to search for lost people. Disaster recovery teams might use drones to survey the area after a tornado. Ranchers can use drones to track down lost cattle. Most of these jobs have been done with traditional helicopters or ultralight aircraft in the past, but drones can do much of the same work at drastically lower cost and risk to humans. 
+FPV Racing 
+The very definition of first-person view or FPV racing includes a camera, yet this activity doesn’t have much to do with aerial photography. To begin with, the drones rarely get that far off the ground. The race courses usually include multiple barriers or gates that the pilots must pass through to complete a circuit. The pilots themselves just sit on the side lines somewhere, stare into their FPV goggles, and move the sticks on their transmitters. 
+The pilots control their drones entirely through the video downlink viewed in an isolating headset, so that one looks out from the point of view of the drone (that is, in first person). 
+20 Make: Drones 
+Education
+The cameras used for this must be pretty small, and good low-light response helps a lot. FPV racers won’t use a gimbal to steady the picture because they need to know which way the drone is pointing. Actually, it’s not uncommon for a racer to carry an action cam in addition to the main FPV camera so the pilot can watch a recording of the ight later. 
+The FPV racing community has settled on the 250 class as the size for the top racers. This means that they measure 250 millimeters from motor to motor. They usually take the form of an “H” rather than an “X” like the drones we will build here. This design favors the mostly forward ight that they are built for. Figure 3-2 shows a typical 250 class FPV racer. 
+Figure 3-2 Benjamin Tovar’s 250 class FPV racer 
+Education 
+Kids love drones, and I believe that drones have a lot to teach them—and the rest of us as well. Kids can be hooked in by the chance to y a drone and then go any number of ways, depending on their interests or the setting. A science class might learn about the physics of ight, or might use the drone as a platform to plan experiments, gather data, and ana lyze results, just as we will soon when testing different props and batteries. 
+Older kids (no age limit here!) can build complete drones following the instructions here, or build their own using the same skills. A complete project includes planning and design, as well as learning to predict performance before you build it (useful skills in many fields). Students can learn about electronics construction on a fun platform, or, for those more comfortable with a keyboard than a soldering iron, learn to configure all the ight parame ters and analyze ight logs using ground control station software. 
+Chapter 3 21 
+Flying
+Flying 
+Of course, drones are for ying. But I believe the public overlooks this aspect of why we y drones too often. Each of us may do one or more of the activities we have just talked about with our drones. But I find that the people who stick with the hobby, the ones who can’t wait to get to the field, are the people who just love ying. 
+Many drone pilots hold traditional pilot’s licenses. Quite a few have own other types of RC aircraft in the past, or perhaps still do. Most of us will gladly take a ride in just about any thing that ies or stand and watch for hours as luckier pilots than us get to y fun-looking aircraft for us at airshows. 
+They say ying is one of our species’ oldest dreams. I have certainly dreamt of it, and taken part whenever I get the chance, since I was a kid. Flying generates science and poetry. Sometimes, when the latest project crashes more than it ies or for any number of reasons I get stuck in front of a screen for too long, I try to remember to take a micro quad out in the front yard and y for a while. Perhaps some kid will walk by and get hooked. 
+22 Make: Drones 
+
+Improve the Hubsan X4 
+4
+
+The Hubsan X4 series includes some of the most popular micro-sized quadcopters avail able (Figure 4-1). They come in a variety of versions ranging from plain to those with live video feeds, but they are all about the same size, and they feel very similar to y. Spare parts—including props, batteries, motors, frames, and controllers—are inexpensive and widely available. 
+Figure 4-1 The Hubsan X4 107C will be our test platform for this chapter 
+23 
+Goals and Test Methods
+This is all great for learning to y and for everyday stick time, but as makers we always want a little more than the manufacturer specs give us. In this chapter, therefore, we will see if we can improve the performance of the Hubsan X4 107C with different props and batteries. Along the way, we will learn some test techniques and gather data that can help us later with other designs. 
+Goals and Test Methods 
+To begin, we need to define what we are going to improve and how to test for it. 
+One of the most talked-about specifications for any drone is ight time. In the real world, ight time depends on factors such as the kind of ying you’re doing, the wind, how beat up your props are, and so forth. We’re going to try to control for most of these factors so we can focus on just two of the things that affect performance and are easily changed: bat teries and propellers. 
+To control for type of ying, let’s first restate our goal more precisely as “hover time” instead of just ight time. Since hovering smoothly in place is not that easy, we will control for ying style and ability by building a test stand that limits the quadcopter’s motion to up and down and thus reduces our required control inputs to throttle only. 
+This test stand is very simple, and it’s easy to build. It lets the quad hang off the edge of a table to allow free downward airow. But before describing its construction, it’s worth pointing out a bit about how engineering works. Not only do we learn design patterns and algorithms from the works of others, but we get test data too. If you are ying an X4 107C on one of the batteries tested here, then there is no reason for you to retest. If you find a great new battery, or want to do similar tests with a new drone design of your own, then here’s the parts list and a picture of what it looks like before it’s built (Figure 4-2): 
+• 10” of 1x4, cut into two 4” pieces and one 2” piece 
+• 18” of 1/4” square dowel 
+• One 3” #4 machine screw, two #4 nuts, and several #4 washers 
+• Two Velcro straps 
+• A bit of wood glue and/or 1 1/2” wood screws 
+• A 5/32” drill bit 
+24 Make: Drones 
+Goals and Test Methods
+Figure 4-2 The parts for this test stand are available at any hardware store 
+The three pieces of 1x4 go together in a “U” formation, held together with glue and/or screws. Glue is stronger, but screws are quicker. Be sure to pre-drill if you use screws since 1x4s tend to split. Drill a 5/32” hole in the exact middle of the 1/4” square dowel. Drill another 5/32” hole in the middle of the two sides of the “U” and bolt the dowel into it with the 3” screw. It’s best to use washers on each side of the dowel and on the outside of the 1x4s, though it’s rather tricky to hold them in place while pushing the screw through. The first Velcro strap is for balance. With the drone not on the end, move the strap around to achieve the best balance possible. Then use the second strap to secure the drone. The only critical points in this design are that the dowel move freely and be relatively balanced. Figure 4-3 shows what it looks like ready for a test run. 
+Chapter 4 25 
+Battery Upgrade
+Figure 4-3 This fixed test stand limits motion to up and down for more reliable tests 
+Battery Upgrade 
+The easiest part to upgrade on most quadcopters is the battery. We remove it after every ight, so why not just put a better one back in? But what will give us better hover time? The lighter battery with less to lift, or the bigger battery with more capacity? Let’s test sev eral batteries and see. 
+First we have to find some candidate batteries. The Hubsan X4 107C comes with a 380 mAh, 25C, 1S LiPo. The 380 mAh is a measure of the total energy that the battery can deliver between the fully charged and fully discharged states. More would give more hover time, except that the battery would also get heavier. 
+The 25C is a measure of how fast the battery can delivery its energy. A 1C battery can empty itself in one hour. A 25C battery can theoretically empty itself in 60/25 = 2.4 minutes. One can also multiply this 25 by the 380 mAh capacity, giving 9,500 mA or 9.5 amps of current. The quadcopter won’t draw this much current all the time, or perhaps ever, but it requires batteries that can deliver this much when needed. 
+The 1S LiPo means that it is a single lithium polymer cell. There are lots of smaller 1S LiPos, but if they have the same 25C rating, then they probably won’t be able to deliver enough current. For testing, suppose we’ve found a 260 mAh battery with a 35–70C rating. When the C rating is a range, the low number is the sustained output and the high one is the peak. The low end of this range only gives 9.1 amps, not quite what the original can do, but 
+26 Make: Drones 
+Prop Upgrade
+the 70C peak will certainly be enough. On the larger end, there are many 500 mAh batter ies that fit in the 107C, and a normal 25C rating times this larger capacity will be plenty. 
+Warning—Don’t Use Underrated LiPos 
+For example, the stock 240 mAh, 25C battery delivered with the smaller Hubsan X4 107L is not enough for the 107C we are using here. Using a LiPo that is not rated to deliver enough current will result in the battery over heating and “puffing” up or even catching re. A tiny amount of expansion after a flight is normal, but if a battery stays puffed up it should not be used again. 
+The test procedure will be to strap the quadcopter down, plug in the battery, turn on the transmitter and let it bind to the receiver, then start the timer and give it just enough throt tle to keep the quad level. This will be a little less at the start; climb slowly then quicker until the lights blink a low battery warning. The measurement will be the time between throttle up and low battery. Table 4-1 lists the results for the batteries described. 
+Table 4-1 Hover time for dierent batteries 
+Description 
+Capacity 
+Weight 
+Hover time
+Smaller 35-70C 
+260 mAh 
+7.7g 
+4:58
+Stock 
+380 mAh 
+10.6g 
+6:12
+Larger 25C 
+500 mAh 
+13g 
+7:22
+
+
+
+The larger battery has almost twice the capacity of the smaller one, but gives less than 50% more hover time. Overall, the larger the battery, the longer the hover time. This relation ship will be limited, though, as too small a battery will not have the power to lift the drone and the drone will not have the power to lift too large a battery. 
+Does this mean that we should always choose the largest battery that we can? Not at all. Hover time is only one parameter, and it comes at the cost of performance. The drone does not climb as fast or maneuver as well with the heavier battery. We might choose the smaller battery just for the fun of the higher performance. Or perhaps we need to add a few grams to the drone elsewhere and want to use a smaller battery to hold the all-up weight constant, even if this means sacrificing a little ight time. 
+Prop Upgrade 
+Propeller design requires a dicult blend of art and science. One might think that a cen tury of design work would have given us the perfect prop, but even today we see very different designs for the same purpose. One might be extra wide (i.e., have a longer chord), 
+Chapter 4 27 
+Prop Upgrade
+in toward the hub and another almost no chord at all in the middle. At first glance a big prop with a wide chord and an aggressive pitch angle might look like it will give more thrust, but most gas engines and electric motors give more power as they spin faster, and that big prop will slow them down. This is why in a plane with a variable pitch prop, maxi mum horsepower is achieved with the attest pitch. 
+Thankfully, we don’t have to design propellers from scratch. We will limit ourselves to test ing a few of the props available to fit our quads. Since the only requirements are fitting the common 1 mm shaft and not being so big they hit each other, we can easily find several to choose from (Figure 4-4). 
+Figure 4-4 A selection of small propellers that will fit a 1 mm shaft 
+Our test procedure will be exactly the same as that described earlier, testing each set of props with a small, stock, and large battery (Table 4-2). In fact, our test runs from the previ ous section will serve as the first series for this experiment. Note that with the exception of the stock Hubsan props, the hubs of these propellers needed to be drilled out to fit. A #62 drill bit is ideal, but they are hard to find; the shaft ripped out of an old micro motor, wrap ped in tape to fit the drill chuck, can be used as a poor substitute. Either way, be very care ful to get the hole straight. 
+28 Make: Drones 
+Prop Upgrade
+Table 4-2 Hover time for dierent props 
+Description 
+260 mAh 
+380 mAh 
+500 mAh
+45 mm Hobby King 
+4:19 
+5:37 
+6:28
+55 mm Hubsan 
+4:58 
+6:12 
+7:22
+60 mm Graupner 
+3:37 
+4:59 
+6:11
+
+
+
+In an interesting result, the props on the lower left in Figure 4-4, the Graupner 55 mm model, didn’t generate enough lift for even the lightest battery. The low battery warning didn’t go off for well over four minutes, but for most of that time even full throttle was not enough for the drone to lift itself. 
+In the end, nothing beats the stock prop. This is not really an unexpected result, as tests of other props for micro drones have similarly failed to find a better one. Of course, each of these props may be the ideal prop for some other application. Figure 4-5 shows what the relationship between battery capacity and hover time looks like for each of the props tested. 
+Figure 4-5 A plot of the linear relationship between battery capacity and hover time 
+And what have we learned from this? Not that one combination of prop and battery is best. For props, add price and availability to performance and the original Hubsans are hard to beat. For batteries, if you value long hover time, the 500 mAh batteries have real benefit at an acceptable loss of performance. But it may turn out more interesting to us to 
+Chapter 4 29 
+Prop Upgrade
+know that there is a lighter battery that can still handle the load. This at least allows us the choice of sacrificing ight time for payload. 
+Propeller Failure 
+The first fatal accident in a powered airplane 
+occurred when a propeller of a new design failed 
+while Orville Wright was performing the first 
+ight carrying a passenger as part of demon 
+strating the Wright Flyer to the US Army 
+(Figure 4-6). That passenger—Lt. Selfridge, the 
+army’s most experienced aviator in those days 
+before the airplane—had worked with Glen Cur 
+tis and Alexander Graham Bell in the Aerial 
+
+Experiment Association that Bell led. Orville might have saved the plane but he was also using a new stick control for the first time, which might have delayed his responses. Orville recov ered from his injuries but would suffer from scia tica for the rest of his life. 
+Figure 4-6 The crash that killed Lieutenant Thomas Selfridge was caused by propeller failure 
+
+As a final word on performance, it’s worth noting why we haven’t looked at changing the other main component in this drone’s power system: the motors. There are more powerful ones available that will fit the X4 (0820 motors, which are 8.5 mm in diameter and 20 mm long). Perhaps the best reason not to try such motors is that they draw significantly more current, and we don’t really know what the X4’s controller is rated for. Also, the increased thrust they would certainly give would come at the expense of ight time, and as we have just seen, we can achieve much the same at lower expense and lower total weight by just using a smaller but powerful battery. 
+Next, we’ll move to the other component besides motors that we haven’t changed: the ight controller. 
+30 Make: Drones 
+
+Build the X4Wii 
+5
+
+In the previous chapter, we ran a series of tests on the Hubsan X4 107C to find out how changing props and batteries affects performance. Now we are going to try changing that most interesting of components, the ight controller. In fact, we are going to build a new drone from scratch, using the frame, motors, and props from an X4, but putting in an open source ight controller. We’ll use the MicroMWC mentioned in Chapter 2 (see Figure 5-1). 
+
+Figure 5-1 This MicroMWC flight controller will give our X4Wii its character 
+31 
+Parts
+You will be surprised how the personality of the drone changes when ying with different software. If you have own an original X4, you may not like the new feel as much at first. But now you can tune the system to your needs, whether that be fast for racing or smooth for video. And you can include accessories that are not available with the stock X4. 
+Where the original Hubsan X4 107D has a video camera and transmitter, we will substitute a Bluetooth module. With it, you can connect a GUI on your computer or smartphone to the X4Wii without stopping to disconnect the battery and connect a USB cable each time you want to change something. This makes the X4Wii a great platform for learning things like how to do proportional–integral–derivative (PID) tuning. When you have tuned the controller just the way you like it, you can then switch to manual mode and learn acrobatic ying! 
+Parts 
+As mentioned, the X4Wii will use the frame, motors, and props from a Hubsan X4 107D. Rather than buying each of these items separately, it is much cheaper to get what is called a crash kit (Figure 5-2). The kit includes a frame, props, motors, and batteries. 
+Figure 5-2 A “crash kit” contains many of the parts we need 
+No electronics come with the crash kit. Instead of stock electronics, we will use the items pictured in Figure 5-3, including, from left to right, an FTDI programmer, the MicroMWC ight controller, and an HB-02 serial Bluetooth module. I suggest getting the FTDI adapter packaged specifically for the MicroMWC because it comes with the two cables also shown. 
+32 Make: Drones 
+Parts
+One of the cables fits the MicroMWC, but it just so happens that the other cable, meant for a MiniMWC, fits the Bluetooth module. So, we can combine these two cables and build one that connects the MicroMWC to the Bluetooth module. While not required, I’d actually sug gest buying two of these adapters: one for the two cables and another to keep handy for later reashing of the MicroMWC. 
+Figure 5-3 A MicroMWC flight controller with accessories 
+The built-in receiver on the MicroMWC board understands the DSM2 protocol. Since the original Hubsan transmitters use a proprietary protocol, we will need a new transmitter. The Blade MLP4DSM, shown in Figure 5-4, does everything we need and can be bought for under $20 used. Any DSM2 transmitter with at least four channels should work, though having at least one additional channel lets you change ight modes easily. The MLP4DSM handles this by having a push of the right stick toggle the AUX1 channel and a push of the left stick momentarily change the AUX2 channel, meaning it is actually a six-channel trans mitter. 
+Chapter 5 33 
+Parts
+Figure 5-4 The MLP4DSM uses stick pushes for its fifth and sixth channels 
+We will also need a few other parts, like a battery connector, heat shrink tubing, a few little bits of wire, and some even tinier screws. Table 5-1 is the complete list. 
+Table 5-1 X4Wii parts list 
+Part 
+Quantity
+Hubsan X4 107D “crash kit” 
+1
+MicroMWC ight controller 
+1
+FTDI adapter for MicroMWC 
+1 + 1 optional
+Bluetooth module (HB-02) 
+1
+Male Micro Losi connector 
+1
+Heat shrink tubing, 1/16” 
+6”
+Wire (~36 AWG) 
+6”
+Screws (1.6 mm x 4 mm) 
+3
+DSM transmitter (MLP4DSM) 
+1
+
+
+
+34 Make: Drones 
+Build
+Build 
+The first thing we need to do is ash new code to the MicroMWC. When I built the first X4Wii, it kept ipping over. It thought up was down and left was right. It’s an easy fix for a drone, but one that requires a code update. 
+Flashing New Code 
+Benedikt, founder of micro-motor-warehouse.com, has set up a version of MultiWii 2.3 for the MicroMWC controller, which we will use as our starting point. To tell the controller which way is up, you must uncomment the line quoted here in the cong.h file. Remove the // at the start of the line and add the minus signs as shown: 
+#define FORCE_ACC_ORIENTATION(X, Y, Z) {imu.accADC[ROLL] = -Y; imu.accADC[PITCH] = -X;  imu.accADC[YAW] = Z;} 
+Download the Arduino Project 
+The complete Arduino project with all the changes described in this chapter can be downloaded from the book’s companion website. 
+We must also change a couple of settings to accommodate the transmitter. The Blade MLP4DSM outputs a range of about 1,150 to 1,830. This range represents the width of a pulse in microseconds in some systems but is just an arbitrary scale here. This matters to us because the control system compares these RC values to preset minimum and maximum values to determine when to do things such as arming the motors. Many transmitters will output a wider range, say 1,000–2,000, or allow you to set the range, but we must make the software accommodate the hardware. Specifically, these values must be changed in the file MultiWii.h: 
+#define MINCHECK 1200 
+#define MAXCHECK 1800 
+Once you have the modified code ready in the Arduino integrated development environ ment (IDE), you can upload it to the MicroMWC. To set up your environment for this board, select “Board: Arduino Pro or Pro Mini” and “Processor: ATmega328 (5v, 16 MHz).” The port setting will vary depending on your computer, but it will include “usbserial.” Figure 5-5 shows how these settings look in OS X. 
+Chapter 5 35 
+Build
+
+Figure 5-5 The settings for connecting the MicroMWC to the Arduino IDE 
+Next, connect the MicroMWC to your computer using the FTDI adapter. Only one of the supplied cables fits and it only fits one way, so this part is easy. Getting the MicroMWC into boot mode, by contrast, is tricky. 
+To get the MicroMWC to reset properly so the bootloader will accept new code, you have to touch the extra pin hanging from the FTDI adapter to just the right little spot on the circuit board at just the right time. Figure 5-6 shows the spot that you have to hit. Hold the pin in place, then start the upload in the IDE. You can remove the pin once the download has started, as indicated by rapidly ashing lights on the FTDI adapter. 
+36 Make: Drones 
+Build
+Figure 5-6 You must hold the pin against this small spot to start the flashing process 
+Wiring 
+I usually start building each new project by wiring the power. In this case all we have to do is solder on the battery connector. The connector needed is a male Micro Losi, which is the same as on a stock Hubsan X4, so the same batteries will fit. You can buy these connectors from several places, but I actually salvaged one off of a cheap battery charger. The connec tion on the board for the positive terminal is well marked and the negative one is near it, as seen in Figure 5-7. This connector should go on the same side of the board as the red radio antenna wire. 
+Chapter 5 37 
+Build
+
+Figure 5-7 The battery connector soldered onto the controller 
+Our new quad will really start coming together as we put the motors in the frame and sol der them to the controller. Be careful to get the motors in the right corners. The front left, as seen from the top of the X4, should be red and blue. Then they alternate going around, as can be seen in Figure 5-8. The wires on the front two motors do not reach far enough, so this is where we use that little extra bit of wire. I salvaged some wire that matches from old motors. The motor wires should come out of the opposite side of the board from the bat tery cable. Complete the motor installation by putting some heat shrink on and soldering the front motors to their extensions as shown. 
+Figure 5-8 The motor wires should be soldered before the MicroMWC is screwed in  
+38 Make: Drones 
+Build
+Finally, we will build a cable to connect the Bluetooth module. As mentioned, we will use the two cables that come with the FTDI adapter. Take the smaller end of each one and con nect the like colors as shown in Figure 5-9. Note that the colors of the supplied cables may change, in which case, of course, it is the order and not the color that really matters. 
+
+Figure 5-9 Building the cable to connect the MicroMWC to the Bluetooth module 
+Also note that, as with all serial connections of this sort, RX goes to TX and TX goes to RX. The result should look something like Figure 5-10 when plugged in. 
+
+Figure 5-10 Wiring diagram for the Bluetooth cable 
+With all the wires in place, we can fit it all together. 
+Chapter 5 39 
+Build
+Assembly 
+Now we can assemble everything to see how it ies! Plug the cable you just built into the MicroMWC and the Bluetooth module. Use one screw to hold the board into the top of the frame. The only hole that lines up between the Hubsan frame and the MicroMWC is at the lower right. It fits very tightly into the case, so one screw should be plenty. Next, place the middle piece of the frame on top, being careful that the motor wires don’t get pinched. The Bluetooth module fits nicely into the slot designed for the video transmitter. A little wire routing, and the result should look like Figure 5-11. 
+Figure 5-11 The Bluetooth module fits where the video transmitter would go 
+Finally, fit the bottom of the case on, again being careful not to pinch any wires. The four motor arms snap together. As you know if you have own a stock X4 before, these motor arms come unsnapped all the time in crashes. This seems to be a way to absorb energy and keep anything from actually breaking, since they always snap right back together again. Two screws hold the middle of the case together. 
+To y, we must put on some props. The MultiWii starts with clockwise at the left front and alternates as shown in Figure 5-12. It helps as a visual cue to put contrasting colors in the front and the back. Press the props on as far as they will go so that crashes will push the prop against the top of the motor, rather than pressing the motor’s shaft down into it. 
+40 Make: Drones 
+Build
+Figure 5-12 Yellow turns clockwise, green turns counterclockwise 
+You are ready to y! The default parameters in the MultiWii work reasonably well for the X4Wii. The DSM radios require a different power-on sequence than the Hubsan’s, though, and since MultiWii also runs much larger, more dangerous drones, we have to intentionally arm the motors before we can y. This checklist should get you airborne: 
+1. Turn on the transmitter. 
+2. Place the battery into the X4Wii and plug it in. 
+3. Place the X4Wii on solid, fairly level ground until the green blinking light stops. 
+4. Hold the left stick on the transmitter down and to the right until the green light comes on solid. 
+5. Throttle up very slightly and then back down; take note that all props turn. 
+(The green light mentioned shines though the case and can be very hard to see in bright sunlight. If you have trouble with the arming sequence, try it in the shade or indoors.) 
+The X4Wii responds a bit sluggishly to stick input compared to the stock X4, at least with the default parameters. But we will tune that up in the next section. 
+Chapter 5 41 
+Setup and Tuning
+Setup and Tuning 
+Our X4Wii ies all right with the default settings, but we chose the MicroMWC and its open source MultiWii firmware so that we could improve and customize the way the X4Wii ies. We will take this in three steps. First we will increase the RC rates a bit—this is a feature most expensive transmitters have that now we can do in software! Then we will experi ment with tuning the PIDs, though this is a complex subject we will tackle in greater detail in a later chapter. Finally, we will set up acrobatic mode on our X4Wii for a real ying chal lenge. 
+RC Rates 
+Radio control (RC) rates are like a gain knob for the control sticks. Turn up the rate, and it’s like you are moving the stick further. Turn the rate down, and it makes your stick move ments smaller. Advanced transmitters allow you to adjust this, but we can get this feature using our simple transmitter by adjusting parameters in MultiWii. The default roll and pitch response—that is, how fast it will rotate front to back or side to side—feels a bit slow to me, so let’s increase these RC rates a little. 
+The “RATE” shown in Figure 5-13 changes the RC rate for pitch and roll. Setting this higher makes the drone respond quicker as you move the sticks. To keep this from making the controls too twitchy and hard to manage, the “EXPO” setting makes the stick response lower around the center. The settings of 1.1 and 0.1 for “RATE” and “EXPO” are not extreme, so feel free to try higher values. 
+Figure 5-13 Setting RC rates with MultiWiiConf 
+42 Make: Drones 
+Setup and Tuning
+Desktop Versus Smartphone 
+
+You can use the desktop program MultiWiiConf  or various smartphone programs like MultiWii Configurator or Naze32 Configurator to adjust settings on your X4Wii (Figure 5-14). 
+
+Figure 5-14 Viewing PID settings in two 
+smartphone apps 
+PIDs 
+The process for connecting different computers or phone applications varies, but in every case, when asked what to connect to, look for “HB-02.” I find the phone app is easier for changing set tings, but the desktop app is easier to read since more settings fit on one screen. 
+
+Setting RC rates can help, but this just makes the drone do the same thing with a little less stick movement. To really make our new drone y better, we will need to tune the PIDs (a topic we’ll discuss in more detail in Chapter 11). The PIDs in MultiWii include an extra “RATE” parameter in addition to the “P” (proportional), “I” (integral), and “D” (derivative) parameters, and this new parameter happens to do just what we want: it increases the rate when using high stick deection. Try setting the “PID Yaw Rate” and the “PID Roll/Pitch Rate” to 0.25 and 0.75, respectively (see Figure 5-15). 
+Chapter 5 43 
+Setup and Tuning
+Figure 5-15 Using MultiWiiConf to adjust the extra RATE parameter 
+I use full yaw all the time, so this setting really helps. Roll and pitch need more adjustment in the midrange, so we will adjust the actual “P,” “I,” and “D” settings next. 
+The PID controllers, embodied by a few lines of code in the firmware, either hold some thing constant or smooth out any required control changes so that they are as fast as pos sible without causing problems such as overshoot or oscillation. The cruise control system in a car uses something like a PID controller, for example. In drones we use them to control roll, pitch, and yaw at a minimum. As we add other systems, like a barometer for altitude hold, PIDs get added to manage these variables too. 
+The “P” setting controls how strongly the controller tries to correct an error between the requested and actual values. The value in question could be roll angle, roll rate, or even latitude. Using roll angle as an example, the desired and actual angles might be different because the wind blew your drone around, changing the actual angle, or because you moved the stick, changing the desired angle. The “P” value in this case would control how much roll force gets applied to reduce the error. 
+If you set “P” too low, the system doesn’t have enough control and the drone will sort of wobble around. If you set “P” too high, the control system goes into oscillations. This may at first look similar to the wobbling around of a low “P.” To be sure which you are seeing, adjust through the middle, more stable zone first. Most tuning guides say to increase “P” until oscillations begin, then back off a little. But adjusting “I” and “D” affects how “P” works, so you may have to make several passes before you get the response you are after (see Figure 5-16). 
+44 Make: Drones 
+Setup and Tuning
+Figure 5-16 “P,” “I,” and “D” settings for a smooth, but more responsive feel 
+You should now have “P,” “I,” and “D” set to your liking—but this is only angle mode. Adding other modes may require more tweaking, and that’s what we’ll talk about next. 
+Modes 
+For extra credit, let’s try setting the X4Wii to what MultiWii calls “manual” mode. Most would call this “rate” mode or full acrobatic mode. It means that the control system uses the gyros to stabilize roll, pitch, and yaw, but it does not use the accelerometers to give any reference to the horizon. In the normal angle mode, the angle of the stick is proportional to the pitch or roll angle of the drone. In rate mode, the angle of the stick determines the roll rate or pitch rate. If you hold the stick all the way to the left, the drone should roll com pletely around. Of course, acrobatics are not that easy! 
+There is a trick to setting MultiWii to “manual”—it doesn’t show up in the list of modes! You get manual mode when no other mode is selected. You select modes when ying by changing AUX channels on the MLP4DSM, and you do that by pushing in the right stick. This changes the AUX1 value from high to low. Modes get selected when the box under the appropriate value, “L” or “H,” is highlighted (Figure 5-17). You highlight a box in Multi WiiConf by clicking on the boxes until you have the settings you want and then pressing “Save.” In general, I find the cell phone apps easier for tweaking settings, which is why we added the Bluetooth connection. 
+Chapter 5 45 
+Setup and Tuning
+
+Figure 5-17 With only the “H” box selected, a low value on AUX1 will give manual mode 
+This completes the construction and initial tuning of the X4Wii (Figure 5-18). We started with a stock frame and motors, but this little drone can do many things that its stock cous ins can’t. We can change the RC rates and adjust the PIDs to fine-tune the X4Wii’s ying to our individual tastes. Thanks to the Bluetooth module, we can easily connect to ground control station software on a computer or smartphone. We can also start learning how to y in rate mode. In short, the X4Wii has many of the features of larger, hobby-grade drones in a small, safe, and cheap to maintain package. 
+
+Figure 5-18 The completed X4Wii 
+46 Make: Drones 
+Setup and Tuning
+Now that we’ve seen how much difference the ight controller makes, it’s time to dig in and see how one works. As makers, we learn how things work by building them, right? So, we shall build a ight controller from separate modules and then write the code that makes it y. 
+Chapter 5 47 
+
+The Visible Drone 
+6
+
+By building the X4Wii, we learned what a difference a ight controller can make. This made me all the more curious to find out what’s going on in there, so in fine maker style, we will build our own! Instead of a single, integrated ight controller, we will build a modular one, combining a standard Arduino-compatible CPU with an accelerometer/gyro module, radios, and a custom motor controller to create our hardware platform. 
+By upgrading key components from what is integrated in the MicroMWC, we will gain sig nificant functionality—such as altitude hold and heading hold—and still have future expandability. Later, the modular nature of the system will allow us to upgrade to a better barometric pressure sensor if one becomes available, or use an even faster processor. It’s like moving up from a boom box to a component stereo. 
+As with any modern gadget, our ight controller will need software. While we could port the MultiWii software we used with the X4Wii to our new hardware platform, that wouldn’t teach us anything new about how ight control software works. So, we will write our own! While it takes many person-years of effort to create a really complete ight control system, by leveraging existing code and keeping our initial scope modest, we can quickly create a ight control system that not only works, but makes it easy to see how it works. 
+Given the highly experimental nature of our controller, it seems best to once again use the frame, motors, and props from a stock drone. Keeping the design as small as possible, but allowing for a heavier controller, we will move to geared motors instead of direct drive. Geared motors can lift more payload for a given amount of power because they use a larger prop. However, the larger prop and the gear train make the system less responsive. There is always a trade-off in aviation. 
+49 
+A Teensy CPU
+In the spirit of making it clear how this drone works, we’re not going to hide our custom controller away inside the body. A window cut into the top of the case will allow us to show off our work and perhaps explain to the next generation of drone makers that this part is the radio, this part is the gyro, and so forth. So, with credit to the clear plastic model of a human with removable organs, we will call this design the Visible Drone. 
+A Teensy CPU 
+The processor in the Visible Drone will be upgraded significantly from the one in the X4Wii. It’s not that the 8-bit CPU on the MicroMWC was having trouble keeping up. It can consis tently run loop times around 2 milliseconds, which means 500 updates per second. Still, the reasons for wanting a more powerful CPU are twofold. Having power to spare will allow for future expansion, but more importantly, we want to move up to a processor with a hardware oating-point unit. 
+To understand what a oating-point number is, see the sidebar on the subject. While an 8- bit Arduino can do oating-point arithmetic, it must do so in software, and this gets too slow on older CPUs. Hardware oating point is fast enough to use in a ight control loop, which means that we can avoid dicult code optimizations that also make the code far less readable. It will allow us, in fact, to take an academic code example and run it as is. Floating point makes the code easier to write and easier to read. 
+Floating-Point Numbers 
+
+Computers use oating-point numbers like we use scientific notation, only in binary instead of base 10. Both consist of a main part, or mantissa, and an exponent. The exponent says how far left or right to move the decimal point, thus the name “oating point.” For example, with a man tissa of 1.000 and exponent of 5, we get 1 x 2^5, or 32. 
+With an exponent of –5, we get 1 x 2^–5, which is 1/32 or 0.03125. This allows the representation of very large and very small numbers without loss of precision. 
+
+In another move to keep the coding easy, we will choose a processor that can be program med using the Arduino integrated development environment. Currently, the Teensy 3.2 from PJRC (Figure 6-1) looks like the best combination of small size, the latest 32-bit CPU with hardware oating point, and plenty of fast ports. As we shall see when we start pro gramming it, it takes a couple of tweaks to the Arduino IDE to support this board, but with those done it feels very familiar. 
+50 Make: Drones 
+Radios
+Figure 6-1 The Teensy 3.2 comes with a lovely pinout card 
+Radios 
+We can use the same radio control (RC) transmitter with the Visible Drone that we used with the X4Wii since a single transmitter can be used with multiple aircraft, but we will need a new RC receiver. It must support the same DSM2 standard as the MLP4DSM trans mitter, but that leaves many choices from several companies. 
+Historically, RC receivers simply talked directly to servos. When gyro stabilizers first appeared, they just plugged inline between the two, using these same servo connections. The trouble is that with lots of channels, each one having three wires (two for power and one for signal), this adds up to lots of wires. Today we have several standards available that put all the channels on a single connection. 
+We will talk about various RC radio standards in Chapter 24, but interestingly, the one we will use wasn’t originally developed as an external interface at all. Spektrum, a maker of RC radios and owner of the DSM2 standard, started making little secondary remote receivers that could be placed in multiple locations on a model for better reception. It turns out that the simple three-wire serial interface they use to talk to the main receiver is also easy to read directly with an Arduino, which is just what we will do. 
+Several companies make Spektrum-compatible satellite receivers. (“Satellite” refers to the fact that they are remote, not that they receive signals from orbit.) For this design, we will use the Lemon RX DSM2 satellite. This tiny board communicates nicely with our transmit ter, weighs less than a gram out of its case, and costs well under $10. 
+Chapter 6 51 
+IMU/AHRS
+Like with the X4Wii, we will also add a Bluetooth radio to the Visible Drone for real-time telemetry and ease of parameter changes. We will use an HC-06 module instead of the HB-02 we used before, but they differ only in the type of physical connection—plug versus pins. More significantly, since we are writing this control system ourselves, we can feed it any data that we want to see and we can use the same channel to send commands back to the drone. Figure 6-2 shows the HC-06 module with the Lemon RX DSM2 receiver. 
+Figure 6-2 The Lemon RX receiver and HC-06 Bluetooth module 
+IMU/AHRS 
+IMU stands for inertial measurement unit and AHRS stands for attitude and heading refer ence system. The latter term covers a broader range of systems that include noninertial sen sors like magnetometers and barometers. In the academic literature on the subject—and there are decades of research out there—the latter are often referred to as MARG systems, for the magnetic, angular rate, and gravity sensors they include. 
+Almost all micro quads today claim six-axis stabilization. A more technical description is that they measure rotation rates around three axes and acceleration rates in three direc tions, making what is known as a six degrees of freedom or 6DOF system. We’re going to improve on that! 
+Today, you can get a 10DOF sensor module that fits in the same space and talks to the same interface, though it does cost all of $10 instead of $3. The GY-88 module (Figure 6-3), available from several sources, includes an accelerometer/gyro chip like other small ight 
+52 Make: Drones 
+Power
+controllers, but adds a magnetometer and a barometer. That’s 3 new degrees of freedom to describe the direction of the Earth’s magnetic field and 1 more for altitude on top of the 6 we already had, giving 10. 
+Figure 6-3 The GY-88 module includes a compass 
+Power 
+For this design we will stick with 1S LiPos, meaning single-cell lithium polymer batteries. As drones get larger, they tend to use higher-voltage LiPos of 3S or more. The higher voltage means that less current and therefore smaller, lighter wires are needed to deliver the same amount of power. For the small, coreless motors in this design, we can get enough power through small wires using only a 1S source. Making the motor wires any lighter would just make them hard to work with, so there is little to be gained by using a more complex and expensive battery. 
+Modern electronics like to have clean, consistent power, but the voltage coming from bat teries varies with load and their state of charge. Our 1S LiPos will run from 4.2V down to 3.7V or so during a normal ight. Also, many of our modules require a 5V supply. All of this can be solved with a DC-DC voltage step-up module like the one shown in Figure 6-4. Con nect a 1S LiPo on one side and get up to 2 amps of clean 5V power on the other. 
+Chapter 6 53 
+Circuit Board with Motor Controllers
+Figure 6-4 A 1S LiPo and this DC-DC convertor give clean 5V power 
+Circuit Board with Motor Controllers 
+In the small quads we have looked at so far, everything is integrated into a single circuit board, including the motor controllers. This makes sense as the circuits are simple and these small quads need to be as light as possible. In larger quads using brushless motors, a complex controller with its own processor is needed for each motor, and the current requirements vary widely, so these electronic speed controllers (ESCs) tend to be separate units. The Visible Drone design exists in an odd gap in between. We are using simpler, brushed motors, but building a modular control system. 
+Most of the available brushed motor controllers are for land vehicles and thus are too big and heavy. Also, they have additional circuitry for going forward and in reverse, which we do not need. Well, we were going to need some kind of circuit board to connect every thing together anyway, and it only takes a couple of parts per motor, so we’re going to build our own motor controllers! 
+The scale of our controller project makes it well suited for testing on a breadboard, but we will need something a little more robust, not to mention smaller and lighter, for ying. Thankfully, one can get custom circuit boards fabricated quickly and cheaply now and the tools to design them are free and easy to use, so we will use a custom PC board for our motor controllers and the connections between all the other modules. 
+54 Make: Drones 
+Frame/Motors/Props
+Frame/Motors/Props 
+Everything we have talked about so far could be the brains of a car, a robot, or anything that uses motors to move and needs to know its position. Of course, that’s part of the point. We are using drones as a vehicle to learn general control systems engineering con cepts. All of these components, from the RC radios to the motor controllers, can be used in projects far removed from building drones. But this time we are building a drone, so let’s choose the frame, motors, and props. 
+In between the little direct-drive micro drones with brushed motors like the X4Wii and the large, hobby-grade multirotors that use brushless motors (also direct-drive), there exists a world of mostly toy drones with brushed motors running larger props through gears. This allows them to run slower and more eciently, which in turn means they can carry more payload—so, let’s build a geared drone this time. 
+I like to stay as small as possible for most drone projects because I can y the resulting product in a small space and the hazards of crashing it into things are mostly to my drone and not to the things I hit (like the neighbor’s car). While you can get geared drones as small as the Hubsan X4s, we will need a little more space for all the components in our control system. The Syma X5 (Figure 6-5) has a nice roomy case, and spare parts are widely available. I got the bind and y (BNF) version without a transmitter. There are also crash kits, but again they don’t come with screws, so the BNF version worked out better this time. 
+Figure 6-5 The Visible Drone project starts with a stock Syma X5 
+Chapter 6 55 
+Weight Budget
+As mentioned, I think our new modular controller will be really cool looking, so I’m going to chop a hole in the top of that case and put in a clear window—but we will cover that in Chapter 13. 
+Weight Budget 
+We will need a few other parts like pins, plugs, and wires, and we won’t really know what the circuit board weighs until much later the project, when the design is complete and back from the fab. Nonetheless, it is our duty as aircraft designers to do a weight budget and check the results against our available thrust. Table 6-1 shows our best available esti mates. 
+Table 6-1 Weight budget for the Visible Drone 
+Item 
+Grams
+Teensy 3.2 
+2.7
+Lemon RX DSM2 satellite receiver 
+1
+HC-06 Bluetooth module 
+3.5
+GY-88 10DOF sensor module 
+2
+19 0.1” pins & 4 motor plugs 
+1
+Circuit board 
+5
+Matek DC-DC 1S to 5V step-up convertor 
+1.8
+Frame/motors/props from Syma X5C 
+64
+680 mAh 1S LiPo 
+16.2
+Total 
+97.2
+
+
+
+For comparison, a stock Syma X5C ies at an all-up weight (AUW) of 85.6 grams, making our modular controller design almost 12 grams heaver. This compares to a measured thrust of 41.7g per motor, for a total of 166.8 grams of thrust. That’s a thrust to weight ratio of only 1.7, a little low. We like to see a ratio of 2 or higher. But that AOW number for the stock X5 is stripped. Most of them y with a camera, bigger landing gear, and prop guards, easily making them as heavy as ours. The Visible Drone, like the stock X5, will be a gentle yer. 
+56 Make: Drones 
+
+Basic I/O Code 
+7
+
+In this chapter we will create a basic framework for our new ight controller code and learn to communicate with some of our key peripherals, including the radios and motors. We will use the framework we build here as the platform for the next few chapters, where we will add the IMU and mode functions. 
+The figures in this section show the circuit being built up on a breadboard. If you plan to use exactly the same circuit as shown in the following chapters in your own project, then you can skip directly to building all of this on the printed circuit board that we will lay out later. 
+Time to write some code! 
+Setting Up the IDE 
+As mentioned in the previous chapter, the Teensy 3.2 processor can be programmed using the Arduino IDE. This can be downloaded from www.arduino.org/software#ide, where there are also instructions on how to install it. Using this IDE with the Teensy 3.2 requires that you install Teensyduino, a package from PJRC (the designers of the Teensy), that includes the Teensyloader program and some Teensy-specific libraries. This package is available at www.pjrc.com/teensy/teensyduino.html. First install the Arduino IDE, then this package. With the included Teensyloader program running, you can upload code to a Teensy just like any Arduino. Open the Arduino IDE, connect the Teensy by USB, and set up the IDE as shown in Figure 7-1. 
+57 
+Setting Up the IDE
+
+Figure 7-1 Arduino IDE settings for the Teensy 3.2 
+To verify that everything is working, it is traditional to run the Blink example program. Open this sketch with File ➙ Examples ➙ Basics ➙ Blink on the Arduino IDE menu, then press the upload button. After the program is compiled, you should be able to see the download progress on the little Teensyloader screen (Figure 7-2). 
+
+Figure 7-2 Teensyloader uploads code to the Teensy 3.2 
+If this sketch uploads and runs correctly, you will see an amber LED on the Teensy blink, one second on, one second off. Working? Great! 
+58 Make: Drones 
+Main Loop
+Main Loop 
+Most ight control systems will have at least two main loops, called inner and outer or fast and slow. There may also be background tasks and interrupt-driven tasks and more com plex task scheduling systems, but we’re trying to keep it simple, so we will stick to a fast and a slow loop for now. We will be indirectly using interrupt processing, but we will do it through established libraries. 
+The code for this project can be downloaded from GitHub at github.com/ dmcgriffy/DroneControlSystem or directly from www.makedrones book.com/projects/VizDrone. 
+The fast loop runs the essential ight stuff. This includes reading the accelerometers, gyros, and control inputs; computing our position and any needed corrections; and finally updat ing the motor speeds. All of this can be done in two or three milliseconds even on a slow 8- bit processor. We will set our inner loop target time to two milliseconds. The inner loop code should be able to execute quite a bit faster than this, but we will run it at exactly two millisecond intervals for consistency. Finally, after the ight control is done, we read any pending telemetry messages. Reading on the fast loop helps keep the input queue from overowing, but we only write on the slow loop. Here is what the inner loop looks like: 
+#define FASTLOOPTARGET (2000) // length of inner control loop in microseconds 
+unsigned long fastLoopLength; 
+unsigned long fastLoopStart = 0; 
+void loop() { 
+// the fast loop for flight control 
+unsigned long fastLoopEnd = micros(); 
+fastLoopLength = fastLoopEnd - fastLoopStart; 
+if ((fastLoopLength) > FASTLOOPTARGET) 
+ { 
+fastLoopStart = fastLoopEnd; 
+readIMU(); // read raw gyro/accel/mag 
+calcIMU(); // calculate current yaw/pitch/roll 
+doMode(); // calculate yaw/pitch/roll commands 
+doPID(); // smooth yaw/pitch/roll commands 
+doMix(); // convert cmds to motor speeds 
+writeMotors(); // write to pwm 
+mspRead(); // check for new telemetry msgs 
+fastLoopTiming = micros() - fastLoopEnd; 
+ } 
+The first line defines the loop length. Two thousand microseconds is our two-millisecond target. Ignoring the declarations, at the start of each pass through the main program loop we check to see if enough time has passed. If so, we reset the clock and run through the list 
+Chapter 7 59 
+RC Receiver
+of fast loop calls. Finally, the time it took to process the fast loop is recorded. We hope that this stays significantly lower than our target loop time. 
+The slow loop has much the same structure. The tasks in our slow loop will all be commu nications for now, in particular the sending of all our telemetry data. We can trade off the speed of this loop against the amount of data to be sent in each pass. The baud rate of the Bluetooth connection (115,200) limits the total amount of data that can be sent. With an update rate of 10 per second we can still send plenty of data in each pass. Here is the slow loop code: 
+#define SLOWLOOPTARGET (100) // length of outer control loop in milliseconds 
+unsigned long slowLoopLength; 
+unsigned long slowLoopStart = 0; 
+void loop() { 
+ ... 
+// the slow loop for communications 
+unsigned long slowLoopEnd = millis(); 
+slowLoopLength = slowLoopEnd - slowLoopStart; 
+if ((slowLoopLength) > SLOWLOOPTARGET) 
+ { 
+slowLoopStart = slowLoopEnd; 
+long slowLoopTimingStart = micros(); 
+mspWrite(); 
+slowLoopTiming = micros() - slowLoopTimingStart; 
+ } 
+Right now, we only have one task in the slow loop: the sending of telemetry messages. Doing the sending here guarantees that we will send messages at most 10 times per sec ond. 
+RC Receiver 
+Now let’s put the radio into radio control by connecting the Lemon RX receiver. First, we must bind the receiver to our transmitter. In order to put the receiver in bind mode, a sequence of pulses must be applied to the power pins. Since the receiver needs only 3.3V and doesn’t draw much power, it is possible to actually power the unit off of a data pin on a 5V Arduino. This would make it easy to pulse the power to the receiver, except that we’re not using a 5V Arduino. The Teensy uses 5V power, but only 3.3V so-called logic levels. 
+After considering more and more complex circuits to allow the Teensy to control the power to the Lemon RX receiver, I finally realized that adding all this circuitry, which we will never need while ying, was the wrong approach. Instead, I recommend that you just get any old 5V logic level Arduino and perform this simple process. I used an old Arduino Uno that I had lying around, and they are available retail from places like Radio Shack and Frys. 
+60 Make: Drones 
+RC Receiver
+Temporarily solder some pins on the end of the receiver cable so that they can be plugged directly into the headers on the Arduino. Now connect the red (or leftmost, looking down at the receiver), wire to pin D5 on the Arduino, the black (or middle) wire to pin D4, and the yellow (or rightmost) wire to pin D0. You can see how this looks in Figure 7-3. 
+
+Figure 7-3 Fritzing and actual images of using an Arduino Uno to bind the Lemon RX receiver 
+You can download the code for the binding process at http://www.makedronesbook.com/ projects/VizDrone. Remember to change the port settings in the Arduino IDE to match the board you are using, and then set them back for programming the Teensy later. Download and run spekbind, and the receiver should momentarily start a fast blink. Once the receiver is ready, hold down the left stick on the transmitter and turn it on. The transmitter should beep and the receiver blink pattern should change. 
+With the receiver bound to the transmitter, let’s wire it up to the Teensy 3.2 and update our code to read from it. This receiver takes 3.3V, as mentioned, but this is no problem now since the Teensy 3.2 outputs up to 250 mAh of 3.3V power, regulated down from its 5V input. This means we can just wire the receiver straight to the Teensy as shown in Figure 7-4. 
+
+Figure 7-4 The Lemon RX receiver gets its power from the Teensy 3.2 CPU 
+Chapter 7 61 
+RC Receiver
+We only receive data on this connection, since there are no settings to send back to the receiver. The data stream consists of frames at 11-millisecond intervals, each containing eight 16-bit values, a header, and seven channel values. For radios with more than seven channels, two frames are needed to transmit all the values. Strangely, the channels seem to be in random order, so we must pay attention to the channel value in bits 11–14. A picture will make it clearer, so look at Figure 7-5. 
+Figure 7-5 The DSM radio format includes seven channels in each frame 
+We will use the standard Arduino Serial library to read from the receiver. We will, however, have to use a serial event interrupt instead of just letting the library buffer for us since we need to know the timing of the arriving bytes in order to determine when a frame starts. The interrupt handler buffers the new bytes and parses the frame if it is complete. The code looks like this: 
+// RX interrupt 
+void serialEvent1() { 
+checkForNewFrame(); 
+  
+// put data in buffer 
+while ((Serial1.available()) && (rxBufPos < RX_BUFFER_SIZE)) 
+rxBuf[rxBufPos++] = (char)Serial1.read(); 
+// parse frame if done 
+if (rxBufPos == SPEK_FRAME_SIZE) 
+parseRXData(); 
+} 
+Parsing the raw receiver data into real channel values inevitably involves some of that messy integer math we are trying to avoid. But we have a 4-bit channel number and a 10- bit value packed into 2 bytes, so the code will end up looking something like the following no matter how you do it: 
+// parse raw serial data into channels 
+void parseRXData() { 
+// convert to channel data in the 1000-2000 range 
+#define SPEK_FRAME_SIZE 16 // 1024 mode 
+62 Make: Drones 
+Bluetooth
+#define SPEK_CHAN_SHIFT 2 // Assumes 10 bit frames, that is 1024 mode. #define SPEK_CHAN_MASK 0x03 // Assumes 10 bit frames, that is 1024 mode. for (int b = 2; b < SPEK_FRAME_SIZE; b += 2) 
+ { 
+uint8_t bh = rxBuf[b]; 
+uint8_t bl = rxBuf[b+1]; 
+uint8_t spekChannel = 0x0F & (bh >> SPEK_CHAN_SHIFT); 
+if (spekChannel < RC_CHANS)  
+ rcValue[spekChannel] = 988 + (((uint16_t)(bh & 
+ SPEK_CHAN_MASK) << 8) + bl); 
+ } 
+// constrain outputs and implement deadband 
+#define DEADBAND (10) 
+#define DEADTOP (MIDRC + DEADBAND) 
+#define DEADBOT (MIDRC - DEADBAND) 
+for (int i=0; i<4; i++) 
+ { 
+rcValue[i] = constrain(rcValue[i], MINRC, MAXRC); 
+if ((rcValue[i] > DEADBOT) && (rcValue[i] < DEADTOP)) 
+rcValue[i] = MIDRC; 
+ } 
+} 
+Note that this routine also implements a deadband on the input values. This means that when you hold the sticks near enough to the middle of the ranges, the values will be con verted to exactly the midpoint. This helps eliminate small drift in roll, pitch, and yaw. 
+Bluetooth 
+The HC-06 Bluetooth module requires four wires for transmit, receive, and power. It uses the same 5V power as the Teensy. Figure 7-6 shows both the Bluetooth and RC radios wired up on a breadboard. 
+Figure 7-6 The Bluetooth and RC radios both use the 2.4 GHz radio band 
+Chapter 7 63 
+Bluetooth
+We will use the MultiWii serial protocol (MSP) for telemetry, which means that we will be able to use existing ground control station software like MultiWiiConf. This protocol is designed to be simple and ecient. The ground station requests updates and sends com mands. The drone sends the requested messages and updates its settings as requested. To request an update, the ground station just sends the update message with a zero data size. Each message starts with “$M” and either “<” or “>”, depending on whether the message is to or from the drone. For example, to request the current roll, pitch, and yaw, collectively called attitude, the ground station would send: 
+"$M<", 108, 0, <crc> 
+The drone might then respond with: 
+"$M>", 108, 6, <roll>, <pitch>, <yaw>, <crc> 
+The number 108 stands for the MSP_ATTITUDE command. The <crc> at the end of each mes sage stands for cyclic redundancy check, which in this case means an exclusive-or of each byte in the message. It is an 8-bit value. The <roll>, <pitch>, and <yaw> values are all 16- bit. 
+To send a message, we have routines that send the preamble, write data to the buffer, then calculate the CRC and send it. See the online source code for details, but as an example, here is the code to send the message we have been talking about: 
+void writeMSP_ATTITUDE() { 
+mspWriteStart(MSP_ATTITUDE); 
+mspWriteWord(IMURoll*10); 
+mspWriteWord(-IMUPitch*10); 
+mspWriteWord(-IMUHead); 
+mspWriteEnd(); 
+} 
+Note that *10 on roll and pitch. It’s that pesky integer math again. You can multiply by 10 and still not overow the range of a 16-bit integer, so this allows one decimal place of pre cision. This apparently isn’t needed for yaw. 
+To parse the incoming MSP message, we will use a state machine. This is just a fancy way of saying that we will wait for a “$”, then wait for an “M”, and so on. In the case of an error—for example, if we don’t get an “M” after a “$”—we go back to the start. We call the condition Found “M” a state. Once we have read the “$M<” preamble, we read the length byte, then loop in the same state while reading the data bytes. Figure 7-7 shows this in a state dia gram. 
+
+Figure 7-7 This state diagram shows how to parse an MSP message 
+64 Make: Drones 
+Bluetooth
+Having a diagram like this to work from makes it easier to write the code. The resulting code looks like this: 
+enum {MSPSTATE_BEGIN, MSPSTATE_DOLLAR, MSPSTATE_M, MSPSTATE_LT, MSPSTATE_DATA} mspState = MSPSTATE_BEGIN; 
+int mspBytesRemain = 0; 
+void mspRead() { 
+// read available messages 
+while (Serial.available()) 
+ { 
+char ch = 0x7f & Serial.read(); 
+switch (mspState) { 
+case (MSPSTATE_BEGIN) : mspState = (ch == '$') ? MSPSTATE_DOLLAR :  
+ MSPSTATE_BEGIN; break; 
+case (MSPSTATE_DOLLAR) : mspState = (ch == 'M') ? MSPSTATE_M :  
+ MSPSTATE_BEGIN; break; 
+case (MSPSTATE_M) : mspState = (ch == '<') ? MSPSTATE_LT :  
+ MSPSTATE_BEGIN; break; 
+case (MSPSTATE_LT) : 
+mspState = MSPSTATE_DATA; 
+mspBytesRemain = ch + 2; // data+cmd+chksum 
+if (mspBytesRemain == 0) 
+ { 
+evaluateMSPCmd(); 
+mspBufPosIn = 0; 
+mspState = MSPSTATE_BEGIN; 
+ } 
+break; 
+case (MSPSTATE_DATA) : 
+mspInBuf[mspBufPosIn++] = ch; 
+if (--mspBytesRemain == 0) 
+ { 
+evaluateMSPCmd(); 
+mspBufPosIn = 0; 
+mspState = MSPSTATE_BEGIN; 
+ } 
+break; 
+ } 
+ } 
+} 
+Near the end of this routine, the real work gets done in the call to evaluateMSPCmd(). When we get a request for an update, which is most of what MultiWiiConf sends, we just set a ag noting the request. The update actually gets sent later in the slow loop to make sure we don’t send more than 10 per second and take time away from ight control. Actual commands like changes to PID settings or even RC stick positions get handled as they are received. 
+Like with the RC receiver code, we will use the standard Arduino Serial library to implement our telemetry. In this case we can let the library do the queuing since we don’t need to know the exact time when a byte comes in. We just need to read the queue often enough to keep it from overowing—hence the read in the fast loop. The only complexity is that 
+Chapter 7 65 
+Motors
+we actually need two input queues, since we can get messages from either USB or Blue tooth. You can see the details in the file MSP.cpp in the source code. 
+Motors 
+After the complexity of implementing telemetry, controlling the motors is easy. We drive the motors with pulse width modulation (PWM) from a digital output on the Teensy. The actual motor driver circuit we will cover in a later chapter. Right now, let’s look at the soft ware required. 
+Pulse width modulation conveys information by the length of each pulse. Our motor responds mostly to the duty cycle, or ratio of on time to off time, but it turns out the rate or frequency at which those pulses occur still represents an interesting compromise. Too low and we would see the motor pulse, but we don’t need to go that low. At moderate fre quencies, in the few hundred to few thousand cycles per second range, the pulses become audible as a high-pitched whine. But we can’t just keep going higher. 
+Our motor driver circuit, like most, uses a field effect transistor (FET) to turn on and off the large ow of current based on the input from the Arduino. It turns out that in our applica tion, the FET uses power mostly when switching, so the faster we switch, the more power it must dissipate as heat. Motor PWM for small, brushed motors like the ones we are using here often runs at 8 kHz. While high pitched, most people can hear a sound in this range. We will start there, but consider going higher if the sound turns out to be a problem. 
+The code for this is simpler than the description. We use the standard Arduino analog Write() calls: 
+uint16_t motor[4]; 
+uint8_t PWM_PIN[4] = {20,21, 22, 23}; 
+void writeMotors() {  
+for (int i=0; i<4; i++) 
+analogWrite(PWM_PIN[i], (motor[i]-1000)/4); 
+} 
+void initMotors() { 
+for (int i=0; i<4; i++) { 
+motor[i] = 1000; 
+pinMode(PWM_PIN[i],OUTPUT); 
+analogWriteFrequency(PWM_PIN[i], 8000); 
+ } 
+writeMotors(); 
+} 
+The values in the variable motor[4] range from 1,000 to 2,000. This represents the range of standard servo PWM in microseconds, but they are just arbitrary numbers for us. The 1,000 gets subtracted off and divided by 4 to give a number in the range of 0 to 256 for the actual PWM register. 
+66 Make: Drones 
